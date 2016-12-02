@@ -20,6 +20,12 @@ cd hapi-wurb && npm install
 cp ./env/_env .env
 ```
 
+## Env
+
+You can find and tweak environment variables for production and development in the config
+folder. Whenever you run the application the correct environment will be loaded
+depending on your current process.env.NODE_ENV. (default to development)
+
 ## Run
 
   * Development mode

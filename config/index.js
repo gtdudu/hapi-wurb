@@ -1,5 +1,5 @@
 require('babel-register');
-require('./loadEnvironnement')
+require('./loadEnvironment')
 
 if (process.env.NODE_ENV === "production") {
   require('./server-prod');

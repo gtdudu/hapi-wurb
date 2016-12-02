@@ -1,10 +1,10 @@
 import webpack from 'webpack';
 import path from 'path';
-// import extractorPlugin from 'extract-text-webpack-plugin';
 
 export default {
   devtool: "#eval-source-map",
   debug : true,
+  target : "web",
   entry: [
     'webpack-hot-middleware/client',
     './client/app.js'
@@ -21,9 +21,6 @@ export default {
     process: false
   },
   plugins: [
-    // This plugin extract css to a different bundle file.
-    // available options : [name], [hash]
-    // new extractorPlugin('[hash]-[name].css'),
 
     // This plugin looks for similar chunks and files
     // and merges them for better caching by the user
@@ -32,20 +29,6 @@ export default {
     // This plugin optimizes chunks and modules by
     // how much they are used in the app
     new webpack.optimize.OccurenceOrderPlugin(),
-
-    // This plugin optimizes chunks and modules by
-    // how much they are used in the app
-    new webpack.optimize.CommonsChunkPlugin({
-      name:      'main', // Move dependencies to our main file
-      children:  true, // Look for common dependencies in all children,
-      minChunks: 2, // How many times a dependency must come up before being extracted
-    }),
-
-    // This plugin prevents Webpack from creating chunks
-    // that would be too small to be worth loading separately
-    new webpack.optimize.MinChunkSizePlugin({
-      minChunkSize: 51200, // ~50kb
-    }),
 
     // manage hot reloading
     new webpack.HotModuleReplacementPlugin(),
@@ -57,13 +40,15 @@ export default {
     new webpack.DefinePlugin({
       "process.env":   {
         // without this react will not be optimized for production
-        NODE_ENV: '"production"',
+        NODE_ENV: '"development"',
         BROWSER : "true",
         REDUX_LOGGER : "true"
       },
     }),
   ],
   resolve: {
+    // extensions not need while importing js files. webpack will
+    // try those ones automatically !
     extensions: ['', '.js'],
     alias: {
       request: 'browser-request'
@@ -85,26 +70,25 @@ export default {
     ],
     loaders: [
       {
+        // run all the code through babel (see .babelrc )
         test: /\.js$/,
         loader: 'babel',
         include: path.join(__dirname, 'client'),
         query: {
           "env": {
             "development": {
+              // without this component have a hard finguring out how to re render
+              // after a hot update
               "presets": ["react-hmre"]
             }
           },
         }
       },
       {
+        // in development the css will be bundle in the bundle.js file
         test:   /\.(scss|css)/,
         include: path.join(__dirname, 'client'),
         loader : 'style!css!sass'
-        // loader: extractorPlugin.extract('style', 'css!sass')
-      },
-      {
-        test:   /\.html/,
-        loader: 'html'
       },
       {
         test:   /\.(png|gif|jpe?g|svg)$/i,

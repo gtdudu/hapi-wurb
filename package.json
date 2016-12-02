@@ -5,8 +5,10 @@
   "author": "tommy durand",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --watch ./server -r ./env/environment index.js",
-    "lint": "eslint ."
+    "start": "nodemon --watch ./config index.js",
+    "build": "webpack --config webpack.prod.config",
+    "prod" : "NODE_ENV=production node index.js",
+    "lint": "eslint . ; exit 0"
   },
   "dependencies": {
     "hapi": "^16.0.0",
@@ -20,6 +22,7 @@
     "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
+    "assets-webpack-plugin": "^3.5.0",
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.2",
@@ -34,6 +37,7 @@
     "babel-runtime": "^6.9.2",
     "baggage-loader": "^0.2.4",
     "chokidar": "^1.6.0",
+    "clean-webpack-plugin": "^0.1.14",
     "colors": "^1.1.2",
     "css-loader": "^0.23.1",
     "css-modules-require-hook": "^4.0.1",

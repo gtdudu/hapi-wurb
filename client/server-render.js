@@ -62,7 +62,7 @@ function renderApp(path, assets, callback) {
             ${
                 assets
                 .filter(path => path.endsWith('.js'))
-                .map(path => `<script src="/${path}"></script>`)
+                .map(path => `<script src="${path}"></script>`)
             }
 
           </body>

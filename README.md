@@ -22,12 +22,21 @@ cp ./env/_env .env
 
 ## Run
 
-  * Only development mode available for now
+  * Development mode
 
 ```
 npm start
 // then visit `http://localhost:8000/`
 ```
+
+* Production mode
+
+```
+npm run build
+npm run prod
+// then visit `http://localhost:8000/`
+```
+
 
 ## Lint
 

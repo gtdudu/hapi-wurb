@@ -1,4 +1,4 @@
-Isomorphic starterkit with server-side React rendering using npm, webpack, webpack-dev-middleware, webpack-hot-middleware, react-transform-hmr, hapi, babel, react, react-router redux, redux-devtools-extension, react-router-redux, sass.
+Isomorphic starterkit with server-side React rendering using npm, webpack, webpack-dev-middleware, webpack-hot-middleware, hapi-webpack-plugin, react-transform-hmr, hapi, babel, react, react-router, redux, redux-thunk, redux-devtools-extension, react-router-redux, sass and some more :D
 
 # Starter kit universal react redux
 
@@ -53,7 +53,7 @@ npm run lint
 
 Redux actions must be plain objects, but redux-thunk allows us to return promises.
 If you want to hydrate your state server side, you need to declare a static function called fetchData in your components
-that returns a dispatch(promise).
+that dispatch an action that returns a promise.
 
 When all fetchData functions for a given route are resolved, then the server can reply.
 
@@ -79,7 +79,6 @@ export class Index extends Component {
   ...
 
 ```
-
 
 ## Inspiration
 

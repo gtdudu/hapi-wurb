@@ -13,6 +13,7 @@ const configureStore = (initialState) => {
   }
 
   const composeEnhancers = process.env.BROWSER && typeof window === 'object'
+    // eslint-disable-next-line no-undef
     ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose)
     : compose;
 

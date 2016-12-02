@@ -1,11 +1,13 @@
-import configDev from '../webpack.config.js';
-import cssModulesRequireHook from 'css-modules-require-hook';
-import webpack from 'webpack';
-import hapi from 'hapi';
-import inert from 'inert';
-import happyDevPlugin from 'hapi-webpack-plugin';
-import api from '../api/';
+import configDev from '../webpack.config.js'
+import cssModulesRequireHook from 'css-modules-require-hook'
+import webpack from 'webpack'
+import hapi from 'hapi'
+import inert from 'inert'
+import happyDevPlugin from 'hapi-webpack-plugin'
+import h2o2 from 'h2o2'
+import url from 'url'
 import path from 'path'
+import api from '../api/'
 
 // checking NODE_ENV just to be safe...
 if (process.env.NODE_ENV === "development") {
@@ -27,7 +29,9 @@ if (process.env.NODE_ENV === "development") {
 
   const hapiPlugins = [
     // inert is used to serve asset files both in prod and dev
-    inert
+    inert,
+    // proxy requests
+    h2o2
   ]
 
   const registerHapiWepackPlugin = {
@@ -60,8 +64,34 @@ if (process.env.NODE_ENV === "development") {
     });
   });
 
+  // Include api routes
+  server.route(api);
+
+  // Endpoint that proxies all GitHub API requests to https://api.github.com.
+  server.route([{
+    method: "GET",
+    path: "/api/tvmaze/{path*}",
+    handler: {
+      proxy: {
+        passThrough: true,
+        mapUri(request, callback) {
+          callback(null, url.format({
+            protocol: "http",
+            host: "api.tvmaze.com",
+            pathname: request.params.path,
+            query: request.query
+          }));
+        },
+        // eslint-disable-next-line no-unused-vars
+        onResponse(err, res, request, reply, settings, ttl) {
+          reply(res);
+        }
+      }
+    }
+  }])
+
   // inert config : serve public/assets folder with inert
-  server.route({
+  server.route([{
     method: 'GET',
     path: '/public/{param*}',
     handler: {
@@ -70,11 +100,7 @@ if (process.env.NODE_ENV === "development") {
         redirectToSlash: true,
       }
     }
-  });
-
-  // Include api routes
-  server.route(api);
-
+  }])
 
   // Anything else gets passed to the client app's server rendering
   server.ext('onPreResponse', function(request, reply) {

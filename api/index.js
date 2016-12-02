@@ -1,3 +1,3 @@
-import appRoutes from './app.js'
+import api from './quotes.js'
 
-export default appRoutes
+export default api

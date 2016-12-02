@@ -4,6 +4,7 @@ import inert from 'inert';
 import api from '../api';
 import path from 'path'
 import stats from "../build/assets.json"
+import h2o2 from 'inert'
 
 // checking NODE_ENV just to be safe...
 if (process.env.NODE_ENV === "production") {
@@ -14,7 +15,9 @@ if (process.env.NODE_ENV === "production") {
 
   const hapiPlugins = [
     // inert is used to serve asset files both in prod and dev
-    inert
+    inert,
+    // proxy request
+    h2o2
   ]
 
   // create hapi server;
@@ -70,11 +73,6 @@ if (process.env.NODE_ENV === "production") {
       return
     }
     if (request.path.length >= 7 && request.path.substr(0, 7) === '/public') {
-      reply.continue()
-      return
-    }
-    if (request.path.length >= 6 && request.path.substr(0, 6) === '/build') {
-      console.log("going to build");
       reply.continue()
       return
     }

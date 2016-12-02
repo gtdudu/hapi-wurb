@@ -5,12 +5,13 @@
   "author": "tommy durand",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --watch ./config index.js",
+    "start": "nodemon --watch ./config --watch ./api index.js",
     "build": "webpack --config webpack.prod.config",
-    "prod" : "NODE_ENV=production node index.js",
-    "lint": "eslint . ; exit 0"
+    "prod": "NODE_ENV=production node index.js",
+    "lint": "eslint ./client ./api ./config ; exit 0"
   },
   "dependencies": {
+    "h2o2": "^5.4.0",
     "hapi": "^16.0.0",
     "inert": "^4.0.3",
     "react": "^15.2.1",

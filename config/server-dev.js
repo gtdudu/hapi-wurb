@@ -1,5 +1,5 @@
 import configDev from '../webpack.config.js'
-import cssModulesRequireHook from 'css-modules-require-hook'
+// import cssModulesRequireHook from 'css-modules-require-hook'
 import webpack from 'webpack'
 import hapi from 'hapi'
 import inert from 'inert'
@@ -7,15 +7,20 @@ import happyDevPlugin from 'hapi-webpack-plugin'
 import h2o2 from 'h2o2'
 import url from 'url'
 import path from 'path'
-import api from '../api/'
+import api from '../src/api/'
+
 
 // checking NODE_ENV just to be safe...
 if (process.env.NODE_ENV === "development") {
 
   // require hook to compile CSS Modules in runtime
   // https://github.com/css-modules/css-modules-require-hook
-  cssModulesRequireHook({generateScopedName: '[path][name]-[local]'});
+  // cssModulesRequireHook({generateScopedName: '[path][name]-[local]'});
+
   const compiler = webpack(configDev);
+  compiler.plugin("compile", function() {
+     console.log("webpack build started.");
+  });
 
   // webpack-dev-middleware config
   const assets = {
@@ -60,9 +65,9 @@ if (process.env.NODE_ENV === "development") {
   server.register(hapiPlugins, (err) => {
     if (err) throw err;
     server.start(() => {
-      console.log("running at : " +`${server.info.uri}`);
     });
   });
+
 
   // Include api routes
   server.route(api);
@@ -96,7 +101,7 @@ if (process.env.NODE_ENV === "development") {
     path: '/public/{param*}',
     handler: {
       directory: {
-        path: path.join(__dirname, '../assets'),
+        path: path.join(__dirname, '../src/assets'),
         redirectToSlash: true,
       }
     }
@@ -116,13 +121,18 @@ if (process.env.NODE_ENV === "development") {
     if (request.path.length >= 7 && request.path.substr(0, 7) === '/public') {
       return reply.continue();
     }
+    if (request.path.length === '/favicon.ico') {
+      reply.continue()
+      return
+    }
+
 
     // get generated assets name(s) and make sure it's an array of strings
     const rawWebpackAssets = request.raw.res.locals.webpackStats.toJson().assetsByChunkName.main;
     const WebpackAssets = Array.isArray(rawWebpackAssets) ? rawWebpackAssets : [rawWebpackAssets];
 
     // generate html depending on route and serve it to the client
-    return require('../client/server-render')(request.path, WebpackAssets, function(err, page) {
+    return require('../src/server-render')(request.path, WebpackAssets, function(err, page) {
       if (err) {
         // this works but we probably need a better way to handle errors
         if (err.err && err.err === "redirect") reply.redirect(err.args);
@@ -141,6 +151,8 @@ if (process.env.NODE_ENV === "development") {
     Object.keys(require.cache).forEach(function(id) {
       if (/[\/\\]client[\/\\]/.test(id)) delete require.cache[id];
     });
+   console.log("running at : " +`${server.info.uri}`);
   });
+
 
 }

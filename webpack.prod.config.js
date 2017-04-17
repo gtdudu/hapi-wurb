@@ -3,12 +3,13 @@ const path = require ('path')
 const extractorPlugin = require ('extract-text-webpack-plugin')
 const cleanPlugin = require ('clean-webpack-plugin')
 const AssetsWebpackPlugin = require ('assets-webpack-plugin')
+const autoprefixer = require('autoprefixer')
 
 module.exports = {
   devtool: false,
   debug : false,
   target : "web",
-  entry: './client/app.js',
+  entry: './src/app.js',
   output: {
     path: path.join(__dirname, 'build'),
     // we use hash and name so that the client can cash the different versions..
@@ -58,12 +59,6 @@ module.exports = {
       minChunkSize: 51200, // ~50kb
     }),
 
-    // manage hot reloading
-    new webpack.HotModuleReplacementPlugin(),
-
-    // need for Hot reload
-    new webpack.NoErrorsPlugin(),
-
     // uglify everything (also does minifying out of the box)
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -96,31 +91,22 @@ module.exports = {
         // which have the same name as the js file
         test: /\.js/,
         loader: 'baggage?[file].scss&[file].css',
-      },
-      {
-        // check the code with eslint before compiling
-        test: /\.js/,
-        loader: 'eslint',
       }
     ],
     loaders: [
+      { test : /\.js$/, include : `${__dirname}/src`, loaders : ['babel'] },
+      { test : /\.eot(\?v=\d+.\d+.\d+)?$/, loader : 'file' },
+      { test : /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader : "url?limit=10000&mimetype=application/font-woff" },
+      { test : /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader : 'url?limit=10000&mimetype=application/octet-stream' },
+      { test : /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader : 'url?limit=10000&mimetype=image/svg+xml' },
+      { test : /\.(jpe?g|png|gif)$/i, loaders : ['file'] },
+      { test : /\.ico$/, loader : 'file?name=[name].[ext]' },
       {
-        // run all the code through babel (see .babelrc )
-        test: /\.js$/,
-        loader: 'babel',
-        include: path.join(__dirname, 'client'),
-      },
-      {
-        // in production we extract all css/scss files to a different bundle
-        // with the extractor plugin
-        test:   /\.(scss|css)/,
-        include: path.join(__dirname, 'client'),
-        loader: extractorPlugin.extract('style', 'css!sass')
-      },
-      {
-        test:   /\.(png|gif|jpe?g|svg)$/i,
-        loader: 'url?limit=10000'
+        test : /(\.css|\.scss)$/,
+        loader : extractorPlugin.extract('css?sourceMap!postcss!sass?sourceMap')
       }
     ]
-  }
-};
+  },
+  postcss : () => [autoprefixer({ browsers : ['last 3 versions'] })],
+
+}

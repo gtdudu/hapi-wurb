@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchShowsNeeded } from '../../actions/show.js';
 
@@ -6,6 +7,20 @@ export class Index extends Component {
 
   static fetchData({ dispatch }) {
     return dispatch(fetchShowsNeeded())
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      local : "local"
+    }
+    this.click = this.click.bind(this);
+
+  }
+
+  click() {
+      console.log("clikc");
+      console.log("yolo");
   }
 
   componentDidMount() {
@@ -18,8 +33,8 @@ export class Index extends Component {
   render() {
     return (
       <div className="root">
-        <div className="logo">
-          <img src="/public/Logo.svg" />
+        <div className="logo" onClick={this.click}>
+          <i className="fa rippleAnimation fa-bullseye" aria-hidden="true"></i>
         </div>
       </div>
     )

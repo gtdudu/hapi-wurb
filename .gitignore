@@ -1,2 +1,5 @@
 node_modules
+utils
+build
+.editorconfig
 .DS_Store

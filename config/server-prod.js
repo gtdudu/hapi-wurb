@@ -1,17 +1,12 @@
-import cssModulesRequireHook from 'css-modules-require-hook';
 import hapi from 'hapi';
 import inert from 'inert';
-import api from '../api';
+import api from '../src/api';
 import path from 'path'
 import stats from "../build/assets.json"
 import h2o2 from 'inert'
 
 // checking NODE_ENV just to be safe...
 if (process.env.NODE_ENV === "production") {
-
-  // require hook to compile CSS Modules in runtime
-  // https://github.com/css-modules/css-modules-require-hook
-  cssModulesRequireHook({generateScopedName: '[path][name]-[local]'});
 
   const hapiPlugins = [
     // inert is used to serve asset files both in prod and dev
@@ -44,7 +39,7 @@ if (process.env.NODE_ENV === "production") {
     handler: {
       directory: {
         // serving both public and build folders
-        path: [path.join(__dirname, '../assets'), path.join(__dirname, '../build') ],
+        path: [path.join(__dirname, '../src/assets'), path.join(__dirname, '../build') ],
         redirectToSlash: true,
       }
     }
@@ -52,6 +47,7 @@ if (process.env.NODE_ENV === "production") {
 
   // Include api routes
   server.route(api);
+
 
   // get generated assets name(s) and make sure it's an array of strings
   const rawWebpackAssets = stats.main
@@ -77,8 +73,14 @@ if (process.env.NODE_ENV === "production") {
       return
     }
 
+    if (request.path.length === '/favicon.ico') {
+      reply.continue()
+      return
+    }
+
+
     // generate html depending on route and serve it to the client
-    return require('../client/server-render')(request.path, webpackAssets, function(err, page) {
+    return require('../src/server-render')(request.path, webpackAssets, function(err, page) {
       if (err) {
         // this works but we probably need a better way to handle errors
         if (err.err && err.err === "redirect") reply.redirect(err.args);

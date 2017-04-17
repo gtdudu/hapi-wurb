@@ -5,15 +5,16 @@
   "author": "tommy durand",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --watch ./config --watch ./api index.js",
+    "start": "nodemon --watch ./config --watch ./src/api index.js",
     "build": "webpack --config webpack.prod.config",
     "prod": "NODE_ENV=production node index.js",
-    "lint": "eslint ./client ./api ./config ; exit 0"
+    "lint": "eslint ./src ./src/api ./config ; exit 0"
   },
   "dependencies": {
     "h2o2": "^5.4.0",
     "hapi": "^16.0.0",
     "inert": "^4.0.3",
+    "prop-types": "^15.5.8",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.6",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.0",
+    "autoprefixer": "^6.7.7",
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.2",
@@ -53,12 +55,22 @@
     "hapi-webpack-plugin": "^1.3.0",
     "node-sass": "^3.13.0",
     "nodemon": "^1.11.0",
+    "postcss-loader": "^1.3.3",
     "redux-logger": "^2.7.4",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
-    "webpack-dev-middleware": "https://github.com/gtdudu/webpack-dev-middleware",
+    "webpack-dev-middleware": "git+https://github.com/gtdudu/webpack-dev-middleware.git",
     "webpack-hot-middleware": "^2.12.1"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gtdudu/hapi-wurb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gtdudu/hapi-wurb/issues"
+  },
+  "homepage": "https://github.com/gtdudu/hapi-wurb#readme"
 }

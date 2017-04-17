@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const App = ({ children }) => {
   return (
-    <div className="root">
+    <div>
       {children}
     </div>
   );

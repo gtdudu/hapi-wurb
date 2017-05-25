@@ -8,7 +8,7 @@ export default {
 	target : "web",
 	entry: [
 		'webpack-hot-middleware/client',
-		'./src/app.js'
+		'./common/app.js'
 	],
 	output: {
 		path: __dirname,
@@ -42,7 +42,6 @@ export default {
 			"process.env":   {
 				// without this react will not be optimized for production
 				NODE_ENV: '"development"',
-				BROWSER : "true",
 				REDUX_LOGGER : "true"
 			},
 		}),
@@ -74,7 +73,7 @@ export default {
 				// run all the code through babel (see .babelrc )
 				test: /\.js$/,
 				loader: 'babel',
-				include: path.join(__dirname, 'src'),
+				include: path.join(__dirname, 'common'),
 				query: {
 					"env": {
 						"development": {
@@ -93,7 +92,7 @@ export default {
       { test : /\.ico$/, loader : 'file?name=[name].[ext]' },
       {
         test : /(\.css|\.scss)$/,
-      	include: path.join(__dirname, 'src'),
+      	include: path.join(__dirname, 'common'),
         loaders : ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap']
       }
 

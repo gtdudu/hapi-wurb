@@ -84,5 +84,5 @@ export class Index extends Component {
 ## Inspiration
 
   *  [glenjamin/ultimate-hot-reloading-example](https://github.com/glenjamin/ultimate-hot-reloading-example)
-  *  [60frames/react-boilerplate](https://github.com/60frames/react-boilerplate/tree/master/src)
+  *  [60frames/react-boilerplate](https://github.com/60frames/react-boilerplate/tree/master/common)
   *  [raquo/minimal-hapi-react-webpack](https://github.com/raquo/minimal-hapi-react-webpack)

@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+.root {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  text-align: center;
+  font-size: 1em;
+  background: yellow;
+}
+
+
+//
+// svg {
+//
+//   height: 100vh;
+//   width : 100vw;
+// }
+//
+// .logo {
+//   position: relative;
+//   animation-duration: 3s;
+//   animation-iteration-count: one;
+//   animation-name: bounceIn;
+//   font-size: 40em;
+//
+//   i {
+//     height: 200px;
+//     width: auto;
+//
+//   }
+//
+// }
+//
+// .rippleAnimation {
+//   animation-duration: 3s;
+//   animation-iteration-count: one;
+//   animation-name: bounceIn;
+//
+// }

@@ -9,7 +9,7 @@ module.exports = {
   devtool: false,
   debug : false,
   target : "web",
-  entry: './src/app.js',
+  entry: './common/app.js',
   output: {
     path: path.join(__dirname, 'build'),
     // we use hash and name so that the client can cash the different versions..
@@ -72,7 +72,6 @@ module.exports = {
         // without this react will not be optimized for production
         NODE_ENV: '"production"',
         BROWSER : "true",
-        REDUX_LOGGER : "false"
       },
     }),
   ],
@@ -94,7 +93,7 @@ module.exports = {
       }
     ],
     loaders: [
-      { test : /\.js$/, include : `${__dirname}/src`, loaders : ['babel'] },
+      { test : /\.js$/, include : `${__dirname}/common`, loaders : ['babel'] },
       { test : /\.eot(\?v=\d+.\d+.\d+)?$/, loader : 'file' },
       { test : /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader : "url?limit=10000&mimetype=application/font-woff" },
       { test : /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader : 'url?limit=10000&mimetype=application/octet-stream' },

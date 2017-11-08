@@ -1,0 +1,271 @@
+.inner6 {
+  display: flex;
+  flex-direction: row;
+
+  @include phone {
+    flex-direction: column;
+  };
+
+  div:first-child {
+    @include desktop {
+      position: fixed;
+      height: 100%;
+      width: 300px;
+    };
+  }
+
+  & > * {
+    display: flex;
+    & > * {
+      display: flex;
+    }
+  }
+
+  div:last-child {
+    flex: 1;
+    @include largeDesktop {
+      padding-left: 300px;
+      height: 100%;
+      flex-direction: column;
+      width: 300px;
+    };
+  }
+
+}
+
+.inner3 {
+  background: #fff;
+  ul {
+    margin: 20px;
+    li {
+      padding-right: 1em;
+      padding-left: 1em;
+
+      .box {
+
+        padding-right: 0;
+        background: url('/public/wall1.jpg');
+        background-position: center center;
+        background-size: cover;
+        min-height: 300px;
+
+        @include largeDesktop {
+
+        };
+      }
+
+      &:nth-child(1) {
+        .box {
+          margin-bottom: 10px;
+        }
+      }
+
+    }
+  }
+}
+
+.inner2 {
+  padding: 5px;
+  background: #fff;
+  display: block;
+  ul {
+    margin: 0;
+    padding: 20px 10px 0 20px;
+    list-style-type: none;
+    width: 100%;
+    @include desktop {
+      padding: 20px 10px 20px 20px;
+
+    };
+
+    &:after{
+      content: "";
+      display: table;
+      clear: both;
+    }
+    li {
+      background: url('/public/wall1.jpg');
+      background-position: center center;
+      background-size: cover;
+      float: left;
+      width: 97%;
+      padding: 0;
+      margin: 0 0 20px 0;
+
+      @include desktop {
+        width: 44%;
+        margin: 20px;
+      };
+
+      @include largeDesktop {
+        width: 30%;
+        margin: 10px;
+      };
+
+    }
+  }
+}
+
+// Get entry-wrappers images
+#entry-1 {
+  background: url('http://imagizer.imageshack.us/v2/xq90/922/sgZl08.jpg');
+  background-size: cover;
+}
+#entry-2 {
+  background: url('http://imagizer.imageshack.us/v2/xq90/922/FtVwR4.jpg');
+  background-size: cover;
+}
+
+#entry-3 {
+  background: url('http://imagizer.imageshack.us/v2/xq90/924/8VQXAj.jpg');
+  background-size: cover;
+}
+
+#entry-4 {
+  background: url('http://imagizer.imageshack.us/v2/xq90/923/EwEDiq.jpg');
+  background-size: cover;
+}
+
+.inner4 {
+  z-index: 99999;
+  position: relative;
+  width: 100%;
+  background: #fff;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  .entry-wrapper {
+    height: 400px;
+    width: 400px;
+    font-size: 14px;
+    line-height: 1.5em;
+    font-weight: 400;
+    font-style: normal;
+    color: #454545;
+    position: relative;
+    a {
+      text-decoration: none;
+      .entry-content {
+        padding: 170px 0 0 0;
+        background: #000;
+        color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        height: 400px;
+        width: 400px;
+        text-align: center;
+        -webkit-transition: 0.3s;
+        -moz-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+        @media(min-width: 768px) {
+          width: 400px;
+        }
+        h2 {
+          padding: 5px;
+        }
+        h3 {
+          padding: 5px;
+        }
+      }
+    }
+    &:hover {
+      .entry-content {
+        z-index: 9999999;
+        opacity: 0.8;
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.inner1 {
+  padding: 0 30px;
+  margin-bottom: 30px;
+  ul {
+    display: flex;
+    flex-direction: column;
+    li {
+      margin-top: 25px;
+      background: #fff;
+      line-height: 24px;
+
+      h1, p {
+        padding: 0px 10px;
+      }
+
+      button {
+        margin: 10px;
+      }
+
+      img {
+        height: 100%;
+        width: auto;
+        float: left;
+        margin: 0 15px 0 0;
+        max-height: 200px;
+        @include tablet {
+          width: 100%;
+          padding-bottom: 30px;
+          max-height: none;
+        };
+      }
+    }
+  }
+}
+
+
+.content-header {
+  margin: 0 30px;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  min-height: 350px;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 350px;
+    width: 100%;
+    z-index: -1;
+    background: url('/public/wall1.jpg') no-repeat center center ;
+    background-size: cover;
+  }
+
+  .top {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .bottom {
+    display: flex;
+    p {
+      width: 100%;
+      font-weight: 400;
+      font-size: 24px;
+      background: rgba(255, 255, 255, 0.8);
+      margin: 0;
+      padding: 20px;
+    }
+  }
+
+  h2 {
+    font-size: 32px;
+    color: #fff;
+    font-weight: 400;
+  }
+
+  &:last-child {
+    justify-content: flex-end;
+  }
+
+}

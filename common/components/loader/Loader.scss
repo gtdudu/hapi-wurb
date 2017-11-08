@@ -1,0 +1,162 @@
+/*******************************************************************
+ *                          VARIABLES                              *
+ *******************************************************************/
+
+/**
+ * BASICS
+ */
+
+/**
+ * ch : character
+ * %
+ * px
+ * em : % par rapport au conteneur
+ * rem : % par rapport a la balise html
+ */
+
+$container-width: 100vw;
+$container-height: 100vh;
+
+$base-font-size: 1.4rem;
+
+// the base line is a ratio (betwwen 1.2 & 1.5) multiplied by the base-font-size
+$base-line-height: 1.25 * $base-font-size;
+
+$border-radius : 3px;
+
+
+/**
+ * TYPOGRAPHY
+ *   Scale based on 1rem with a ratio of 1.333
+ *   Line-height has to be a multiple of the base-line-height (close but larger than the font size)
+ *
+ *      -1 : small text (1rem * 1.333^-1)
+ *       0 : body text  (1rem * 1.333^0)
+ *       1 : large text (1rem * 1.333^1)
+ *       2 : main heading  (1rem * 1.333^2)
+ *
+ */
+
+ $type-settings: (
+   -1: (
+     font-size: 1.4rem !important,
+     line-height: $base-line-height !important,
+     margin : 0 0 $base-line-height 0 !important
+   ),
+   0: (
+     font-size: 1.86666666667rem !important,
+     line-height: $base-line-height !important,
+     margin : 0 0 $base-line-height 0 !important
+   ),
+   1: (
+     font-size: 2.48888888889rem !important,
+     line-height: $base-line-height * 2 !important,
+     margin : 0 0 $base-line-height * 1 0 !important
+   ),
+   2: (
+     font-size: 3.31851851852rem !important,
+     line-height: $base-line-height * 2 !important,
+     margin : 0 0 $base-line-height * 2 0 !important
+   )
+ );
+
+ @function type-scale($level) {
+   @return map-get(
+     map-get($type-settings, $level), 'font-size');
+ }
+
+ @function line-height($level) {
+   @return map-get(
+     map-get($type-settings, $level), 'line-height');
+ }
+
+ @function type-margin($level) {
+   @return map-get(
+     map-get($type-settings, $level), 'margin');
+ }
+
+ @mixin type-setting($level) {
+   font-size: type-scale($level);
+   line-height: line-height($level);
+   margin: type-margin($level);
+
+ }
+
+ /**
+  * COLORS
+  */
+
+$theme-colors: (
+  'primary': #3E5E9B,
+  'secondary' : #E99D48,
+  'border': #e0e2e4,
+  'text' : #55595c,
+  'alert' : #fce486,
+  'bg' : #F8F8F8
+);
+
+@function theme-color($name) {
+  @return map-get($theme-colors, $name);
+};
+
+$len : $base-line-height;
+$radius : $base-line-height / 3;
+$duration : infinite;
+$color : #fff;
+
+.loader {
+  display: flex;
+  flex-direction: raw;
+  justify-content: center;
+  align-items: center;
+}
+
+.placeholder {
+  padding-right: 20px;
+}
+
+.loading {
+	width:$len;
+	height:$len;
+  background: transparent;
+}
+
+.outerCircle {
+	display:block;
+	margin:5px 0 0 5px;
+	width:$radius;
+	height:$radius;
+	background-color:#transparent;
+	border-radius:$radius;
+	-moz-border-radius:$radius;
+	-webkit-border-radius:$radius;
+	-ms-border-radius:$radius;
+	-o-border-radius:$radius;
+	display:block;
+	position:absolute;
+	margin:auto;
+
+	width:inherit;
+	height:inherit;
+	border-top:7px solid $color;
+	border-bottom:7px solid transparent;
+	border-left:7px solid transparent;
+	border-right:7px solid $color;
+
+	border-radius:80px;
+	-moz-border-radius:80px;
+	-webkit-border-radius:80px;
+	-ms-border-radius:80px;
+	-o-border-radius:80px;
+
+	-webkit-animation: cwSpin 1s linear .2s $duration;
+	-moz-animation: cwSpin .666s linear .2s $duration;
+	-o-animation: cwSpin .666s linear .2s $duration;
+	-ms-animation: cwSpin .666s linear .2s $duration;
+	animation: cwSpin .666s linear .2s $duration;
+}
+
+@keyframes cwSpin {
+	0%{transform:rotate(0deg);	}
+	100%{transform:rotate(360deg); }
+}

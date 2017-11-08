@@ -1,0 +1,367 @@
+@import "md";
+
+// glacial
+// $brown: #2A3132;
+// $dark-blue: #336B87;
+// $red: #763626;
+// $blue: #90AFC5;
+//
+// $link: $brown;
+// $bloc1: $dark-blue;
+// $bloc2: $blue;
+
+$link: #DDD;
+$bloc1: #222;
+$bloc2: #333;
+
+
+.wrap2 {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  & > * {
+    display: flex;
+  }
+
+  .hidden-checkbox {
+    display: none;
+    margin-right: 20px;
+    position: relative;
+    & ~ .menu {
+      background-color: $bloc2;
+      transition: margin 0.5s ease-out;
+      z-index: 9999;
+
+      @include tablet {
+        position: fixed;
+        top: 0;
+        width: 300px;
+        height: 100%;
+        flex-direction: column;
+      }
+
+      @include desktop {
+        background-color: $bloc2;
+        padding: 0 100px;
+        border-bottom: 20px solid $bloc2;
+      };
+
+      @include largeDesktop {
+        padding: 0 200px;
+      };
+
+      button {
+        .btn {
+          border: none;
+          background: #fff;
+          border-radius: 20px;
+          font-weight: 400;
+          text-transform: uppercase;
+          padding: 15px 25px;
+        }
+
+        .btn.dark {
+        	background: #4b4848;
+          color: #fff;
+        }
+      }
+
+
+      li {
+        display: flex;
+        white-space: nowrap;
+
+        @include tablet {
+          padding-left: 30px;
+          margin: 5px 0;
+        };
+
+        @include desktop {
+          justify-content: center;
+          margin: 0 10px;
+          flex: 1;
+        };
+
+        button[type="button"] {
+          border: none;
+          background: none;
+          margin: 0;
+          padding: 0;
+          color: #DDD;
+          font-family: 'Raleway', sans-serif;
+          font-size: 14px;
+          font-weight: lighter;
+          text-transform: uppercase;
+          cursor: pointer;
+          &:hover {
+            color: #c19c78;
+          }
+        }
+
+        .btn.dark {
+        	background: #4b4848;
+          color: #fff;
+        }
+
+        a {
+          line-height: 24px;
+          text-transform: uppercase;
+          color: $link;
+
+          &.active {
+            @include desktop {
+              color: #c19c78;
+              border-bottom: 1px solid #c19c78;
+            };
+          }
+
+          &:hover {
+            color: #c19c78;
+          }
+        }
+      }
+
+    }
+
+    &:not(:checked) {
+     & ~ .menu {
+
+       @include tablet {
+         margin-left: -300px;
+       }
+     }
+
+     & ~ .menu-trigger {
+       button {
+        pointer-events: none;
+       }
+       &:before {
+         display: none;
+       }
+     }
+    }
+
+    &:checked {
+      & ~ .menu {
+
+        @include tablet {
+          padding-top: 40px;
+          left: 0px;
+          transform: translate(100, 0);
+        }
+      }
+
+      & ~ .menu-trigger {
+        &:before {
+          z-index: 9998;
+          background: rgba(255,255,255, 0.4);
+        }
+
+        span {
+          &:nth-child(1) {
+            transform: rotate(45deg);
+            top: 0px;
+            left: 8px;
+          }
+          &:nth-child(2) {
+            width: 0%;
+            opacity: 0;
+          }
+          &:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 18px;
+            left: 8px;
+          }
+        }
+      }
+
+    }
+  }
+
+  .info {
+    background-color: $bloc1;
+    color: #999;;
+    flex-direction: column;
+
+    @include desktop {
+      justify-content: flex-start;
+      flex-direction: row;
+    };
+
+    & > * {
+      display: flex;
+      padding: 5px;
+      justify-content: center;
+      @include desktop {
+        justify-content: flex-start;
+      };
+    }
+
+    .un {
+      flex: 1;
+      align-items: center;
+      p {
+        @include desktop {
+          padding-left: 60px;
+          text-transform: uppercase;
+          font-size: 11px;
+        };
+      }
+    }
+
+    .deux {
+      align-items: center;
+      i {
+        padding-left: 10px;
+        font-size: 18px;
+
+        @include desktop {
+          color: #fff;
+          text-transform: uppercase;
+        };
+
+        &:hover {
+          color: cyan;
+        }
+      }
+    }
+
+    .trois {
+      align-items: center;
+      p {
+        @include desktop {
+          padding-left: 30px;
+          padding-right: 60px;
+          text-transform: uppercase;
+          font-size: 11px;
+        };
+      }
+    }
+  }
+
+  .logo {
+    padding: 20px;
+    background-color: $bloc2;
+    color: #fff;
+    height: 100px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  &.sticky {
+		&:before {
+			@include desktop {
+				content: "";
+				width: 200px;
+				height: 45px;
+				background: red;
+				position: relative;
+			}
+		}
+		.menu {
+	    @include desktop {
+	      position: fixed;
+	      top: 0;
+	      padding-top: 20px;
+	      width: 100%;
+	    };
+		}
+  }
+
+  .menu-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $bloc2;
+    padding-bottom: 20px;
+
+    @include desktop {
+      display: none;
+    };
+
+    &:before {
+      @include tablet {
+        transition: visibility 0s, opacity 2s linear;
+      };
+      content: "";
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      z-index: 0;
+    }
+  }
+
+  .content:first-child {
+
+  }
+
+  .main-content {
+
+    z-index: 0;
+    flex-direction: column;
+    flex: 1;
+
+    .content-header {
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        height: 350px;
+        width: 100%;
+        z-index: -1;
+        background: url('/public/wall1.jpg') no-repeat center center ;
+        background-size: cover;
+      }
+      margin: 0 30px;
+      justify-content: center;
+      flex-direction: column;
+      display: flex;
+      min-height: 350px;
+
+      .top {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .bottom {
+        display: flex;
+        p {
+          width: 100%;
+          font-weight: 400;
+          font-size: 24px;
+          background: rgba(255, 255, 255, 0.8);
+          margin: 0;
+          padding: 20px;
+        }
+      }
+
+      h2 {
+        font-size: 32px;
+        color: #fff;
+        font-weight: 400;
+      }
+
+      &:last-child {
+        justify-content: flex-end;
+      }
+
+    }
+
+    .content-body {
+      min-height: 2000px;
+    }
+  }
+
+  .header {
+  }
+}

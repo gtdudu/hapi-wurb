@@ -1,0 +1,258 @@
+@import "md";
+
+.wrap {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+
+  @include largeDesktop {
+    flex-direction: row;
+  }
+
+  .header {
+    position: fixed;
+    background: #fff;
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+    flex-flow: row wrap;
+    z-index: 9001;
+    text-align: center;
+    & > * {
+      flex: 1 100%;
+    }
+
+    @include largeDesktop {
+      border-right: 1px solid #f7f5f5;
+      padding-left: 55px;
+      width: 300px;
+      height: 100%;
+      flex-direction: column;
+    }
+  }
+
+
+  .logo {
+    font-size: 22px;
+    height: 100px;
+    align-items: center;
+    flex: 4;
+    display: flex;
+    font-size: 24px;
+    letter-spacing: 2px;
+    background-position: center center;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+
+    @include desktop {
+      flex: 1;
+      justify-content: left;
+    };
+
+    @include largeDesktop {
+      display: flex;
+      margin-bottom: 30px;
+      align-items: flex-end;
+      padding: 0;
+    };
+
+  }
+
+  .menu-trigger {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0.5;
+
+    &:after {
+      @include tablet {
+        transition: visibility 0s, opacity 2s linear;
+      };
+      content: "";
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      position: absolute;
+      z-index: 0;
+    }
+
+    @include desktop {
+      display: none;
+    };
+  }
+
+  ul.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-transform: capitalize;
+
+    @include desktop {
+      flex: 1;
+      flex-direction: row;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      margin-right: 30px;
+      height: 100px;
+    };
+
+    @include largeDesktop {
+      flex: 7;
+      flex-direction: column;
+      justify-content: flex-start;
+    };
+
+    li {
+      border-top: 1px solid #f7f5f5;
+      white-space: nowrap;
+      @include desktop {
+        border: none;
+        padding: 0 10px;
+      }
+
+      @include largeDesktop {
+        height: 50px;
+        padding: 0 5px;
+        width: 100%;
+        text-align: left;
+      };
+
+      &:last-child {
+        @include tablet {
+          border-bottom: 1px solid #f7f5f5;
+        };
+      }
+
+      button[type="button"] {
+        border: none;
+        background: none;
+        font-family: 'Raleway', sans-serif;
+        font-size: 14px;
+        font-weight: lighter;
+        text-transform: capitalize;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        &:hover {
+          color: #c19c78;
+        }
+      }
+      .btn.dark {
+      	background: #4b4848;
+        color: #fff;
+      }
+
+    }
+
+  }
+
+
+  .hidden-checkbox {
+    display: none;
+    margin-right: 20px;
+
+    & ~ .menu {
+      @include tablet {
+        transition: visibility 0s, opacity 0.5s linear;
+      };
+    }
+
+
+    &:not(:checked) {
+     & ~ .menu {
+       @include tablet {
+         opacity: 0;
+         position: absolute;
+         background: yellow;
+         top: -9999px;
+       };
+     }
+
+     & ~ .menu-trigger {
+       &:after {
+         height: 1px;
+         opacity: 0;
+       }
+     }
+    }
+
+    &:checked {
+      & ~ .menu-trigger {
+        &:after {
+          background: rgba(0,0,0, 0.4);
+          top: 100%;
+          height: 100%;
+        }
+
+        span {
+          &:nth-child(1) {
+            transform: rotate(45deg);
+            top: 0px;
+            left: 8px;
+          }
+          &:nth-child(2) {
+            width: 0%;
+            opacity: 0;
+          }
+          &:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 18px;
+            left: 8px;
+          }
+        }
+      }
+
+      & ~ .menu {
+        @include tablet {
+          opacity: 1;
+        };
+      }
+    }
+  }
+
+  .shadow-header {
+    height: 100px;
+    width: 300px;
+    min-width: 300px;
+  }
+
+
+
+
+
+  /*
+  ** ---------------- BODY TITLE
+  */
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    background: #f6f6f6;
+    z-index: 9000;
+    margin-top: 100px;
+
+    @include largeDesktop {
+      margin-top: 0;
+      margin-left: 300px;
+    };
+
+   .content-body {
+      background: #F6F6F6;
+
+
+      h2 {
+        font-size: 32px;
+        color: #fff;
+        font-weight: 400;
+      }
+    }
+  }
+
+}

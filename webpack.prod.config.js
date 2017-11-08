@@ -1,15 +1,15 @@
-const webpack = require ('webpack')
-const path = require ('path')
-const extractorPlugin = require ('extract-text-webpack-plugin')
-const cleanPlugin = require ('clean-webpack-plugin')
-const AssetsWebpackPlugin = require ('assets-webpack-plugin')
+const webpack = require('webpack')
+const path = require('path')
+const extractorPlugin = require('extract-text-webpack-plugin')
+const cleanPlugin = require('clean-webpack-plugin')
+const AssetsWebpackPlugin = require('assets-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 
 module.exports = {
   devtool: false,
-  debug : false,
-  target : "web",
-  entry: './src/app.js',
+  debug: false,
+  target: "web",
+  entry: './common/app.js',
   output: {
     path: path.join(__dirname, 'build'),
     // we use hash and name so that the client can cash the different versions..
@@ -48,8 +48,8 @@ module.exports = {
     // This plugin optimizes chunks and modules by
     // how much they are used in the app
     new webpack.optimize.CommonsChunkPlugin({
-      name:      'main', // Move dependencies to our main file
-      children:  true, // Look for common dependencies in all children,
+      name: 'main', // Move dependencies to our main file
+      children: true, // Look for common dependencies in all children,
       minChunks: 2, // How many times a dependency must come up before being extracted
     }),
 
@@ -68,11 +68,10 @@ module.exports = {
 
     // define custom env variable throught webpack
     new webpack.DefinePlugin({
-      "process.env":   {
+      "process.env": {
         // without this react will not be optimized for production
         NODE_ENV: '"production"',
-        BROWSER : "true",
-        REDUX_LOGGER : "false"
+        BROWSER: "true",
       },
     }),
   ],
@@ -94,19 +93,18 @@ module.exports = {
       }
     ],
     loaders: [
-      { test : /\.js$/, include : `${__dirname}/src`, loaders : ['babel'] },
-      { test : /\.eot(\?v=\d+.\d+.\d+)?$/, loader : 'file' },
-      { test : /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader : "url?limit=10000&mimetype=application/font-woff" },
-      { test : /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader : 'url?limit=10000&mimetype=application/octet-stream' },
-      { test : /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader : 'url?limit=10000&mimetype=image/svg+xml' },
-      { test : /\.(jpe?g|png|gif)$/i, loaders : ['file'] },
-      { test : /\.ico$/, loader : 'file?name=[name].[ext]' },
+      { test: /\.js$/, include: `${__dirname}/common`, loaders: ['babel'] },
+      { test: /\.eot(\?v=\d+.\d+.\d+)?$/, loader: 'file' },
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
+      { test: /\.(jpe?g|png|gif)$/i, loaders: ['file'] },
+      { test: /\.ico$/, loader: 'file?name=[name].[ext]' },
       {
-        test : /(\.css|\.scss)$/,
-        loader : extractorPlugin.extract('css?sourceMap!postcss!sass?sourceMap')
+        test: /(\.css|\.scss)$/,
+        loader: extractorPlugin.extract('css?sourceMap!postcss!sass?sourceMap')
       }
     ]
   },
-  postcss : () => [autoprefixer({ browsers : ['last 3 versions'] })],
-
+  postcss: () => [autoprefixer({ browsers: ['last 3 versions'] })],
 }

@@ -4,11 +4,11 @@ import autoprefixer from 'autoprefixer'
 
 export default {
 	devtool: "#eval-source-map",
-	debug : false,
-	target : "web",
+	debug: false,
+	target: "web",
 	entry: [
 		'webpack-hot-middleware/client',
-		'./src/app.js'
+		'./common/app.js'
 	],
 	output: {
 		path: __dirname,
@@ -39,11 +39,13 @@ export default {
 
 		// define custom env variable throught webpack
 		new webpack.DefinePlugin({
-			"process.env":   {
+			"process.env": {
 				// without this react will not be optimized for production
-				NODE_ENV: '"development"',
-				BROWSER : "true",
-				REDUX_LOGGER : "true"
+				NODE_ENV: `process.env.NODE_ENV`,
+				REDUX_LOGGER: `process.env.REDUX_LOGGER`,
+        FETCH_HOST: `process.env.FETCH_HOST`,
+        PORT: `process.env.PORT`,
+        EXTERNAL_PORT: 'process.env.EXTERNAL_PORT'
 			},
 		}),
 	],
@@ -74,31 +76,31 @@ export default {
 				// run all the code through babel (see .babelrc )
 				test: /\.js$/,
 				loader: 'babel',
-				include: path.join(__dirname, 'src'),
+				include: path.join(__dirname, 'common'),
 				query: {
-					"env": {
-						"development": {
+					env: {
+						development: {
 							// without this component have a hard finguring out how to re render
 							// after a hot update
-							"presets": ["react-hmre"]
+							presets: ["react-hmre"]
 						}
 					},
 				}
 			},
-      { test : /\.eot(\?v=\d+.\d+.\d+)?$/, loader : 'file' },
-      { test : /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader : "url?limit=10000&mimetype=application/font-woff" },
-      { test : /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader : 'url?limit=10000&mimetype=application/octet-stream' },
-      { test : /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader : 'url?limit=10000&mimetype=image/svg+xml' },
-      { test : /\.(jpe?g|png|gif)$/i, loaders : ['file'] },
-      { test : /\.ico$/, loader : 'file?name=[name].[ext]' },
+      { test: /\.eot(\?v=\d+.\d+.\d+)?$/, loader: 'file' },
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
+      { test: /\.(jpe?g|png|gif)$/i, loaders: ['file'] },
+      { test: /\.ico$/, loader: 'file?name=[name].[ext]' },
       {
-        test : /(\.css|\.scss)$/,
-      	include: path.join(__dirname, 'src'),
-        loaders : ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap']
+        test: /(\.css|\.scss)$/,
+      	include: path.join(__dirname, 'common'),
+        loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap']
       }
 
 		]
 	},
-  postcss : () => [autoprefixer({ browsers : ['last 3 versions'] })]
+  postcss: () => [autoprefixer({ browsers: ['last 3 versions'] })]
 
 };
